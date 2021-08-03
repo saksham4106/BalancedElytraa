@@ -1,5 +1,6 @@
 package io.github.saksham4106.balanced_elytra.mixin;
 
+import io.github.saksham4106.balanced_elytra.Config;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.LightningBoltEntity;
@@ -25,10 +26,16 @@ public class ElytraItemMixin {
         World world = entity.world;
         int strength = 0;
         if(world.isRainingAt(pos)){
-            strength = 15;
+            if(Config.ELYTRAA_GO_DOWN.get() && (flightTicks + 1) % 40 == 0) {
+                if (rand.nextInt(2) == 1) {
+                    entity.addVelocity(0, -0.7, 0);
+                }
+            }
+
+            strength = 100 - Config.DAMAGE_STRENGTH_RAIN.get();
             if(world.isThundering()){
-                strength = 7;
-                if(rand.nextInt(7000) == 0){
+                strength = 100 - Config.DAMAGE_STRENGTH_THUNDER.get();
+                if(rand.nextInt(10000 - Config.THUNDER_CHANCE.get()) == 0){
                     pos = pos.add(rand.nextInt(10), rand.nextInt(10), rand.nextInt(10));
                     LightningBoltEntity lightningBoltEntity = new LightningBoltEntity(EntityType.LIGHTNING_BOLT, world);
                     lightningBoltEntity.moveForced(Vector3d.copyCenteredHorizontally(pos));

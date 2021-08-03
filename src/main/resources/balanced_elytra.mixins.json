@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "balanced_elytra.refmap.json",
   "mixins": [
-    "ElytraItemMixin"
+    "ElytraItemMixin",
+    "FireworkRocketEntityMixin"
   ],
   "client": [
   ],
